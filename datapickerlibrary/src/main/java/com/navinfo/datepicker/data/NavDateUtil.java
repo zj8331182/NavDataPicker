@@ -100,6 +100,15 @@ public class NavDateUtil<T extends BaseNavDate> {
         return (data & (((1 << length) - 1) << shift)) >> shift;
     }
 
+    /**
+     * @param start 开始日期
+     * @param end 结束日期
+     * @param tClass 返回数据的类型
+     * @param isShowChineseDate 是否显示日历
+     * @return 数据列表
+     * @throws IllegalAccessException Error
+     * @throws InstantiationException Error
+     */
     public List<T> getNavDateRange(Calendar start, Calendar end, Class<T> tClass, boolean isShowChineseDate) throws IllegalAccessException, InstantiationException {
         Calendar temp = (Calendar) start.clone();
         List<T> list = new ArrayList<>();
@@ -121,12 +130,12 @@ public class NavDateUtil<T extends BaseNavDate> {
                 }
                 T tDate = tClass.newInstance();
                 Calendar cTemp = (Calendar) temp.clone();
-                if (isShowChineseDate) {
-                    BaseNavDate bTemp = new BaseNavDate(cTemp, NavDatePickerConstant.VIEW_TYPE_CHINESEDATE);
-                    bTemp.setChineseDate(calendarToChineseDate(cTemp));
-                }
-                tDate.setDate(cTemp);
                 tDate.setType(NavDatePickerConstant.VIEW_TYPE_DATE);
+                tDate.setDate(cTemp);
+                if (isShowChineseDate) {
+                    tDate.setType(NavDatePickerConstant.VIEW_TYPE_CHINESEDATE);
+                    tDate.setChineseDate(calendarToChineseDate(cTemp));
+                }
                 list.add(tDate);
             }
         }
