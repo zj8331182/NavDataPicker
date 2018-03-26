@@ -21,7 +21,7 @@
   module中的build.gradle
   
     dependencies {
-  	    compile 'com.github.zj8331182:NavDataPicker:v1.0.0'
+  	    compile 'com.github.zj8331182:NavDataPicker:v1.0.1'
   	}
   这个不多说
   
