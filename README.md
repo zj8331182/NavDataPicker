@@ -1,6 +1,6 @@
 # NavDataPicker
 
-[![](https://jitpack.io/v/zj8331182/NavDataPicker.svg)](https://jitpack.io/#zj8331182/NavDataPicker)
+[![](https://jitpack.io/v/zj8331182/NavDataPicker.svg)](https://jitpack.io/#zj8331182/NavDataPicker)<br/>
 一个可以高度自定义的日期控件,A custom calendar
 
 
@@ -33,7 +33,7 @@
      <t/><t/>Adapter的数据使用NavDateUtil中的getNavDateRange方法获取原始的数据<br/>
      <t/><t/>可以自己对数据进行加工,支持泛型,然后自己在自定义的Adapter中对数据进行展示<br/>
      <br/>
- **效果图**
+ **效果图**<br/>
 ![Image text](https://github.com/zj8331182/NavDataPicker/blob/master/img/img_srceen.jpg)
 
 

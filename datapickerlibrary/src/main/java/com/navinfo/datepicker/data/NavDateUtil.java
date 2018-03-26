@@ -16,30 +16,7 @@ public class NavDateUtil<T extends BaseNavDate> {
 
     private static final int[] DAYS_AND_LEAP_MONTH_OF_LUNAR = {1897, 0xed436, 0xed64a, 0xed83f, 0xeda53, 0xedc48, 0xede3d, 0xee050, 0xee244, 0xee439, 0xee64d, 0xee842, 0xeea36, 0xeec4a, 0xeee3e, 0xef052, 0xef246, 0xef43a, 0xef64e, 0xef843, 0xefa37, 0xefc4b, 0xefe41, 0xf0054, 0xf0248, 0xf043c, 0xf0650, 0xf0845, 0xf0a38, 0xf0c4d, 0xf0e42, 0xf1037, 0xf124a, 0xf143e, 0xf1651, 0xf1846, 0xf1a3a, 0xf1c4e, 0xf1e44, 0xf2038, 0xf224b, 0xf243f, 0xf2653, 0xf2848, 0xf2a3b, 0xf2c4f, 0xf2e45, 0xf3039, 0xf324d, 0xf3442, 0xf3636, 0xf384a, 0xf3a3d, 0xf3c51, 0xf3e46, 0xf403b, 0xf424e, 0xf4443, 0xf4638, 0xf484c, 0xf4a3f, 0xf4c52, 0xf4e48, 0xf503c, 0xf524f, 0xf5445, 0xf5639, 0xf584d, 0xf5a42, 0xf5c35, 0xf5e49, 0xf603e, 0xf6251, 0xf6446, 0xf663b, 0xf684f, 0xf6a43, 0xf6c37, 0xf6e4b, 0xf703f, 0xf7252, 0xf7447, 0xf763c, 0xf7850, 0xf7a45, 0xf7c39, 0xf7e4d, 0xf8042, 0xf8254, 0xf8449, 0xf863d, 0xf8851, 0xf8a46, 0xf8c3b, 0xf8e4f, 0xf9044, 0xf9237, 0xf944a, 0xf963f, 0xf9853, 0xf9a47, 0xf9c3c, 0xf9e50, 0xfa045, 0xfa238, 0xfa44c, 0xfa641, 0xfa836, 0xfaa49, 0xfac3d, 0xfae52, 0xfb047, 0xfb23a, 0xfb44e, 0xfb643, 0xfb837, 0xfba4a, 0xfbc3f, 0xfbe53, 0xfc048, 0xfc23c, 0xfc450, 0xfc645, 0xfc839, 0xfca4c, 0xfcc41, 0xfce36, 0xfd04a, 0xfd23d, 0xfd451, 0xfd646, 0xfd83a, 0xfda4d, 0xfdc43, 0xfde37, 0xfe04b, 0xfe23f, 0xfe453, 0xfe648, 0xfe83c, 0xfea4f, 0xfec44, 0xfee38, 0xff04c, 0xff241, 0xff436, 0xff64a, 0xff83e, 0xffa51, 0xffc46, 0xffe3a, 0x10004e, 0x100242, 0x100437, 0x10064b, 0x100841, 0x100a53, 0x100c48, 0x100e3c, 0x10104f, 0x101244, 0x101438, 0x10164c, 0x101842, 0x101a35, 0x101c49, 0x101e3d, 0x102051, 0x102245, 0x10243a, 0x10264e, 0x102843, 0x102a37, 0x102c4b, 0x102e3f, 0x103053, 0x103247, 0x10343b, 0x10364f, 0x103845, 0x103a38, 0x103c4c, 0x103e42, 0x104036, 0x104249, 0x10443d, 0x104651, 0x104846, 0x104a3a, 0x104c4e, 0x104e43, 0x105038, 0x10524a, 0x10543e, 0x105652, 0x105847, 0x105a3b, 0x105c4f, 0x105e45, 0x106039, 0x10624c, 0x106441, 0x106635, 0x106849, 0x106a3d};
 
-    private static final int ONE_WEEK_DAYS = 7;
-
-    public static List<BaseNavDate> getNavDateRangeWithChineseDate(Calendar start, Calendar end) {
-        Calendar temp = (Calendar) start.clone();
-        List<BaseNavDate> list = new ArrayList<>();
-        if (end.compareTo(start) > 0) {
-            int tag;
-            while (end.compareTo(temp) > 0) {
-                temp.add(Calendar.DATE, 1);
-                if (temp.get(Calendar.DATE) == 1) {
-                    tag = temp.get(Calendar.DAY_OF_WEEK);
-                    list.add(new BaseNavDate((Calendar) temp.clone(), NavDatePickerConstant.VIEW_TYPE_MONTH_TITLE));
-                    for (int i = 0; i < (tag < ONE_WEEK_DAYS ? tag - 1 : 0); i++) {
-                        list.add(new BaseNavDate(NavDatePickerConstant.VIEW_TYPE_EMPTY));
-                    }
-                }
-                Calendar cTemp = (Calendar) temp.clone();
-                BaseNavDate bTemp = new BaseNavDate(cTemp, NavDatePickerConstant.VIEW_TYPE_CHINESEDATE);
-                bTemp.setChineseDate(calendarToChineseDate(cTemp));
-                list.add(bTemp);
-            }
-        }
-        return list;
-    }
+    private static final int FIRST_DAY_IN_WEEK = Calendar.SUNDAY;
 
     private static ChineseDate calendarToChineseDate(Calendar calendar) {
         int year = calendar.get(Calendar.YEAR);
@@ -101,9 +78,9 @@ public class NavDateUtil<T extends BaseNavDate> {
     }
 
     /**
-     * @param start 开始日期
-     * @param end 结束日期
-     * @param tClass 返回数据的类型
+     * @param start             开始日期
+     * @param end               结束日期
+     * @param tClass            返回数据的类型
      * @param isShowChineseDate 是否显示日历
      * @return 数据列表
      * @throws IllegalAccessException Error
@@ -122,10 +99,13 @@ public class NavDateUtil<T extends BaseNavDate> {
                     tTitle.setDate((Calendar) temp.clone());
                     tTitle.setType(NavDatePickerConstant.VIEW_TYPE_MONTH_TITLE);
                     list.add(tTitle);
-                    for (int i = 0; i < (tag < ONE_WEEK_DAYS ? tag - 1 : 0); i++) {
+                    Calendar tem = Calendar.getInstance();
+                    tem.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                    while (tag > FIRST_DAY_IN_WEEK) {
                         T tEmpty = tClass.newInstance();
                         tEmpty.setType(NavDatePickerConstant.VIEW_TYPE_EMPTY);
                         list.add(tEmpty);
+                        tag--;
                     }
                 }
                 T tDate = tClass.newInstance();
