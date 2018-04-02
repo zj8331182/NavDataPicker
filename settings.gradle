@@ -1,1 +1,1 @@
-include ':sample', ':datapickerlibrary'
+include ':sample', ':datapickerlibrary', ':testapp'

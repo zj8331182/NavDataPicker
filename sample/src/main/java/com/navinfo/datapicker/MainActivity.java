@@ -16,8 +16,6 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private WeekendDatePickerAdapter mPickerAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
-        mPickerAdapter = new WeekendDatePickerAdapter();
+        WeekendDatePickerAdapter mPickerAdapter = new WeekendDatePickerAdapter();
         mPickerAdapter.setDateList(date_pickers);
         dataPicker.setDataPickerAdapter(mPickerAdapter);
     }

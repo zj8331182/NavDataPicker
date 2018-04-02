@@ -15,7 +15,7 @@ import java.util.List;
  */
 public abstract class BaseNavDataPickerAdapter<T extends BaseNavDate> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    protected List<T> mDateList;
+    List<T> mDateList;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
