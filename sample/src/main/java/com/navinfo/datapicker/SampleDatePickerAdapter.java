@@ -17,7 +17,8 @@ import static com.navinfo.datepicker.data.BaseSelectDate.NAV_DATE_PICKER_SELECT_
 import static com.navinfo.datepicker.data.BaseSelectDate.NAV_DATE_PICKER_SELECT_STATE_SELECTED;
 import static com.navinfo.datepicker.data.BaseSelectDate.NAV_DATE_PICKER_SELECT_STATE_SELECTED_END;
 import static com.navinfo.datepicker.data.BaseSelectDate.NAV_DATE_PICKER_SELECT_STATE_SELECTED_START;
-import static com.navinfo.datepicker.data.NavDatePickerConstant.VIEW_TYPE_DATE;
+import static com.navinfo.datepicker.data.NavDatePickerConstant.NavDatePickerViewType.VIEW_TYPE_DATE;
+import static com.navinfo.datepicker.data.NavDatePickerConstant.NavDatePickerViewType.VIEW_TYPE_MONTH_TITLE;
 
 /**
  * @author Zhang Mingzhe
@@ -25,38 +26,59 @@ import static com.navinfo.datepicker.data.NavDatePickerConstant.VIEW_TYPE_DATE;
  * mail:1084904209@qq.com
  * Describe
  */
-public class SampleDatePickerAdapter extends BaseSelectDataPickerAdapter<SampleDatePickerAdapter.SampleViewHolder> {
+public class SampleDatePickerAdapter extends BaseSelectDataPickerAdapter<SampleDatePickerAdapter.BaseSampleViewHolder> {
 
     @Override
-    public void onBindViewHolderCustom(SampleViewHolder holder, int position) {
+    public void onBindViewHolder(BaseSampleViewHolder holder, int position) {
         BaseSelectDate date = (BaseSelectDate) mDateList.get(position);
-        if (date.getType() == VIEW_TYPE_DATE) {
-            switch (date.getSelectState()) {
-                case NAV_DATE_PICKER_SELECT_STATE_SELECTED:
-                    holder.imageView.setBackgroundColor(Color.RED);
-                    break;
-                case NAV_DATE_PICKER_SELECT_STATE_SELECTED_START:
-                    holder.imageView.setBackgroundColor(Color.GRAY);
-                    break;
-                case NAV_DATE_PICKER_SELECT_STATE_SELECTED_END:
-                    holder.imageView.setBackgroundColor(Color.YELLOW);
-                    break;
-                case NAV_DATE_PICKER_SELECT_STATE_NOT_SELECT:
-                default:
-                    holder.imageView.setBackgroundColor(Color.WHITE);
-                    break;
-            }
-            holder.textView.setText(String.valueOf(date.getDate().get(Calendar.DATE)));
+        switch (date.getType()) {
+            case VIEW_TYPE_DATE:
+                SampleViewHolder viewHolder = (SampleViewHolder) holder;
+                switch (date.getSelectState()) {
+                    case NAV_DATE_PICKER_SELECT_STATE_SELECTED:
+                        viewHolder.imageView.setBackgroundColor(Color.RED);
+                        break;
+                    case NAV_DATE_PICKER_SELECT_STATE_SELECTED_START:
+                        viewHolder.imageView.setBackgroundColor(Color.GRAY);
+                        break;
+                    case NAV_DATE_PICKER_SELECT_STATE_SELECTED_END:
+                        viewHolder.imageView.setBackgroundColor(Color.YELLOW);
+                        break;
+                    case NAV_DATE_PICKER_SELECT_STATE_NOT_SELECT:
+                    default:
+                        viewHolder.imageView.setBackgroundColor(Color.WHITE);
+                        break;
+                }
+                viewHolder.textView.setText(String.valueOf(date.getDate().get(Calendar.DATE)));
+                break;
+            case VIEW_TYPE_MONTH_TITLE:
+                SampleMonthViewHolder monthViewHolder = (SampleMonthViewHolder) holder;
+                Calendar calendar = date.getDate();
+                monthViewHolder.tvTitle.setText(calendar.get(Calendar.YEAR) + "年 " + (calendar.get(Calendar.MONTH) + 1) + "月");
+                break;
+            default:
+                break;
         }
     }
 
     @Override
-    protected SampleViewHolder onCreateViewHolderCustomInSelectMode(ViewGroup parent, int viewType) {
-        return new SampleViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_date_picker_item, parent, false));
+    protected BaseSampleViewHolder onCreateViewHolderCustomInSelectMode(ViewGroup parent, int viewType) {
+        switch (viewType) {
+            case VIEW_TYPE_MONTH_TITLE:
+                return new SampleMonthViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_month_title_item, parent, false));
+            case VIEW_TYPE_DATE:
+            default:
+                return new SampleViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_date_picker_item, parent, false));
+        }
     }
 
-    class SampleViewHolder extends BaseSelectDatePickerViewHolder {
+    class BaseSampleViewHolder extends BaseSelectDatePickerViewHolder {
+        BaseSampleViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
 
+    class SampleViewHolder extends BaseSampleViewHolder {
         ImageView imageView;
         TextView textView;
 
@@ -64,6 +86,16 @@ public class SampleDatePickerAdapter extends BaseSelectDataPickerAdapter<SampleD
             super(itemView);
             textView = itemView.findViewById(R.id.tv_date);
             imageView = itemView.findViewById(R.id.iv_background);
+        }
+    }
+
+    class SampleMonthViewHolder extends BaseSampleViewHolder {
+
+        TextView tvTitle;
+
+        SampleMonthViewHolder(View itemView) {
+            super(itemView);
+            tvTitle = itemView.findViewById(R.id.tv_month_title);
         }
     }
 

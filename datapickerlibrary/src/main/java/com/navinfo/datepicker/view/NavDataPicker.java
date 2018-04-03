@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-import com.navinfo.datepicker.data.NavDatePickerConstant;
+import static com.navinfo.datepicker.data.NavDatePickerConstant.NavDatePickerViewType.VIEW_TYPE_MONTH_TITLE;
 
 /**
  * @author Zhang Mingzhe
@@ -39,7 +39,7 @@ public class NavDataPicker extends RelativeLayout {
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return mDataPickerAdapter.getItemViewType(position) == NavDatePickerConstant.VIEW_TYPE_MONTH_TITLE ? 7 : 1;
+                return mDataPickerAdapter.getItemViewType(position) == VIEW_TYPE_MONTH_TITLE ? 7 : 1;
             }
         });
         recyclerView.setLayoutManager(gridLayoutManager);

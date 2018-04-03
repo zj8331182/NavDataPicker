@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static com.navinfo.datepicker.data.NavDatePickerConstant.NavDatePickerViewType.VIEW_TYPE_CHINESE_DATE;
+import static com.navinfo.datepicker.data.NavDatePickerConstant.NavDatePickerViewType.VIEW_TYPE_DATE;
+import static com.navinfo.datepicker.data.NavDatePickerConstant.NavDatePickerViewType.VIEW_TYPE_EMPTY;
+import static com.navinfo.datepicker.data.NavDatePickerConstant.NavDatePickerViewType.VIEW_TYPE_MONTH_TITLE;
+
 /**
  * @author Zhang Mingzhe
  * @date 2018/3/22
@@ -97,23 +102,23 @@ public class NavDateUtil<T extends BaseNavDate> {
                     tag = temp.get(Calendar.DAY_OF_WEEK);
                     T tTitle = tClass.newInstance();
                     tTitle.setDate((Calendar) temp.clone());
-                    tTitle.setType(NavDatePickerConstant.VIEW_TYPE_MONTH_TITLE);
+                    tTitle.setType(VIEW_TYPE_MONTH_TITLE);
                     list.add(tTitle);
                     Calendar tem = Calendar.getInstance();
                     tem.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
                     while (tag > FIRST_DAY_IN_WEEK) {
                         T tEmpty = tClass.newInstance();
-                        tEmpty.setType(NavDatePickerConstant.VIEW_TYPE_EMPTY);
+                        tEmpty.setType(VIEW_TYPE_EMPTY);
                         list.add(tEmpty);
                         tag--;
                     }
                 }
                 T tDate = tClass.newInstance();
                 Calendar cTemp = (Calendar) temp.clone();
-                tDate.setType(NavDatePickerConstant.VIEW_TYPE_DATE);
+                tDate.setType(VIEW_TYPE_DATE);
                 tDate.setDate(cTemp);
                 if (isShowChineseDate) {
-                    tDate.setType(NavDatePickerConstant.VIEW_TYPE_CHINESE_DATE);
+                    tDate.setType(VIEW_TYPE_CHINESE_DATE);
                     tDate.setChineseDate(calendarToChineseDate(cTemp));
                 }
                 list.add(tDate);
