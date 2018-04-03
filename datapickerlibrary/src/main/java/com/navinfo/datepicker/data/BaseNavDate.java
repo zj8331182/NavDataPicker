@@ -10,20 +10,11 @@ import java.util.Calendar;
  */
 public class BaseNavDate {
 
-    Calendar mDate;
+    private Calendar mDate;
     private int mType;
     private ChineseDate mChineseDate;
 
     BaseNavDate() {
-    }
-
-    BaseNavDate(int type) {
-        mType = type;
-    }
-
-    BaseNavDate(Calendar date, int type) {
-        mDate = date;
-        this.mType = type;
     }
 
     public Calendar getDate() {

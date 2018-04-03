@@ -40,7 +40,7 @@ public abstract class BaseSelectDataPickerAdapter<T extends BaseSelectDatePicker
     public void setSelectMode(int mode) {
         switch (mode) {
             case NAV_DATE_PICKER_SELECT_MODE_TWO:
-                mSelectMode = new DatePickerSelectTwoMode();
+                mSelectMode = new DatePickerSelectTwoMode<BaseSelectDate>();
                 break;
             case NAV_DATE_PICKER_SELECT_MODE_ONE:
             default:

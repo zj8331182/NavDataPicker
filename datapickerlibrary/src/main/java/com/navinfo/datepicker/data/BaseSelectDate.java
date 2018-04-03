@@ -1,7 +1,5 @@
 package com.navinfo.datepicker.data;
 
-import java.util.Calendar;
-
 /**
  * @author Zhang Mingzhe
  */
@@ -14,16 +12,6 @@ public class BaseSelectDate extends BaseNavDate {
     private int mSelectState;
 
     public BaseSelectDate() {
-        mSelectState = NAV_DATE_PICKER_SELECT_STATE_NOT_SELECT;
-    }
-
-    public BaseSelectDate(int type) {
-        super(type);
-        mSelectState = NAV_DATE_PICKER_SELECT_STATE_NOT_SELECT;
-    }
-
-    public BaseSelectDate(Calendar date, int type) {
-        super(date, type);
         mSelectState = NAV_DATE_PICKER_SELECT_STATE_NOT_SELECT;
     }
 

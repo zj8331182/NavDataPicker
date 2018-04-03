@@ -75,4 +75,11 @@ public class DefaultDatePickerAdapter extends BaseNavDataPickerAdapter {
                 break;
         }
     }
+
+    class DefaultNavDatePickerViewHolder extends RecyclerView.ViewHolder {
+        DefaultNavDatePickerViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
 }
