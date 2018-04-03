@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NavDataPicker</string>
+    <string name="date_background">Date background</string>
 </resources>

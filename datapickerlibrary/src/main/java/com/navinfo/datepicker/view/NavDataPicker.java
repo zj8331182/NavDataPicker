@@ -5,12 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
-import com.navinfo.datepicker.data.BaseNavDate;
 import com.navinfo.datepicker.data.NavDatePickerConstant;
-
-import java.util.Calendar;
 
 /**
  * @author Zhang Mingzhe
@@ -18,7 +15,7 @@ import java.util.Calendar;
  * mail:1084904209@qq.com
  * Describe
  */
-public class NavDataPicker<T extends Class<? extends BaseNavDate>> extends FrameLayout {
+public class NavDataPicker extends RelativeLayout {
     private final static int DATE_PICKER_SPAN_COUNT = 7;
     private BaseNavDataPickerAdapter mDataPickerAdapter;
 
@@ -52,9 +49,5 @@ public class NavDataPicker<T extends Class<? extends BaseNavDate>> extends Frame
 
     public void setDataPickerAdapter(BaseNavDataPickerAdapter dataPickerAdapter) {
         mDataPickerAdapter = dataPickerAdapter;
-    }
-
-    public void setDateRange(Calendar start, Calendar end){
-
     }
 }

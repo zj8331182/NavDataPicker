@@ -18,7 +18,7 @@ import java.util.Calendar;
  * mail:1084904209@qq.com
  * Describe
  */
-public class DefaultDatePickerAdapter extends BaseNavDataPickerAdapter<BaseNavDate> {
+public class DefaultDatePickerAdapter extends BaseNavDataPickerAdapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolderCustom(ViewGroup parent, int viewType) {
@@ -29,7 +29,7 @@ public class DefaultDatePickerAdapter extends BaseNavDataPickerAdapter<BaseNavDa
                 textView.setHeight(200);
                 textView.setBackgroundColor(Color.LTGRAY);
                 return new DefaultNavDatePickerViewHolder(textView);
-            case NavDatePickerConstant.VIEW_TYPE_CHINESEDATE:
+            case NavDatePickerConstant.VIEW_TYPE_CHINESE_DATE:
                 TextView tvDate = new TextView(parent.getContext());
                 tvDate.setGravity(View.TEXT_ALIGNMENT_CENTER);
                 tvDate.setHeight(150);
@@ -57,16 +57,17 @@ public class DefaultDatePickerAdapter extends BaseNavDataPickerAdapter<BaseNavDa
 
     @Override
     public void onBindViewHolderCustom(RecyclerView.ViewHolder holder, int position) {
+        BaseNavDate date = (BaseNavDate) mDateList.get(position);
         switch (holder.getItemViewType()) {
-            case NavDatePickerConstant.VIEW_TYPE_CHINESEDATE:
-                ((TextView) ((LinearLayout) holder.itemView).getChildAt(0)).setText(String.valueOf(mDateList.get(position).getDate().get(Calendar.DAY_OF_MONTH)));
-                ((TextView) ((LinearLayout) holder.itemView).getChildAt(1)).setText(String.valueOf(mDateList.get(position).getChineseDate().getDate()));
+            case NavDatePickerConstant.VIEW_TYPE_CHINESE_DATE:
+                ((TextView) ((LinearLayout) holder.itemView).getChildAt(0)).setText(String.valueOf(date.getDate().get(Calendar.DAY_OF_MONTH)));
+                ((TextView) ((LinearLayout) holder.itemView).getChildAt(1)).setText(String.valueOf(date.getChineseDate().getDate()));
                 break;
             case NavDatePickerConstant.VIEW_TYPE_DATE:
-                ((TextView) holder.itemView).setText(String.valueOf(mDateList.get(position).getDate().get(Calendar.DAY_OF_MONTH)));
+                ((TextView) holder.itemView).setText(String.valueOf(date.getDate().get(Calendar.DAY_OF_MONTH)));
                 break;
             case NavDatePickerConstant.VIEW_TYPE_MONTH_TITLE:
-                Calendar calendar = mDateList.get(position).getDate();
+                Calendar calendar = date.getDate();
                 ((TextView) holder.itemView).setText(calendar.get(Calendar.YEAR) + "年 " + (calendar.get(Calendar.MONTH) + 1) + "月");
                 break;
             case NavDatePickerConstant.VIEW_TYPE_EMPTY:

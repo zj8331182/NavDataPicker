@@ -113,7 +113,7 @@ public class NavDateUtil<T extends BaseNavDate> {
                 tDate.setType(NavDatePickerConstant.VIEW_TYPE_DATE);
                 tDate.setDate(cTemp);
                 if (isShowChineseDate) {
-                    tDate.setType(NavDatePickerConstant.VIEW_TYPE_CHINESEDATE);
+                    tDate.setType(NavDatePickerConstant.VIEW_TYPE_CHINESE_DATE);
                     tDate.setChineseDate(calendarToChineseDate(cTemp));
                 }
                 list.add(tDate);

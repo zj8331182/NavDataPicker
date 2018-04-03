@@ -13,12 +13,12 @@ import java.util.List;
  * mail:1084904209@qq.com
  * Describe
  */
-public abstract class BaseNavDataPickerAdapter<T extends BaseNavDate> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class BaseNavDataPickerAdapter<T extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<T> {
 
-    List<T> mDateList;
+    protected List<? extends BaseNavDate> mDateList;
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public final T onCreateViewHolder(ViewGroup parent, int viewType) {
         return onCreateViewHolderCustom(parent, viewType);
     }
 
@@ -30,7 +30,7 @@ public abstract class BaseNavDataPickerAdapter<T extends BaseNavDate> extends Re
      * @return Custom ViewHolder
      * @see RecyclerView.Adapter
      */
-    public abstract RecyclerView.ViewHolder onCreateViewHolderCustom(ViewGroup parent, int viewType);
+    public abstract T onCreateViewHolderCustom(ViewGroup parent, int viewType);
 
     /**
      * 自定义Item的onBindViewHolder
@@ -39,10 +39,10 @@ public abstract class BaseNavDataPickerAdapter<T extends BaseNavDate> extends Re
      * @param position position
      * @see RecyclerView.Adapter
      */
-    public abstract void onBindViewHolderCustom(RecyclerView.ViewHolder holder, int position);
+    protected abstract void onBindViewHolderCustom(T holder, int position);
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public final void onBindViewHolder(T holder, int position) {
         onBindViewHolderCustom(holder, position);
     }
 
@@ -51,7 +51,7 @@ public abstract class BaseNavDataPickerAdapter<T extends BaseNavDate> extends Re
         return mDateList == null ? 0 : mDateList.size();
     }
 
-    public void setDateList(List<T> dateList) {
+    public void setDateList(List<? extends BaseNavDate> dateList) {
         mDateList = dateList;
     }
 

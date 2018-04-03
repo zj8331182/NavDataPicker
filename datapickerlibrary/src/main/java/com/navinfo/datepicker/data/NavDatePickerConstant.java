@@ -12,5 +12,5 @@ public final class NavDatePickerConstant {
     public static final int VIEW_TYPE_DATE = 1;
     public static final int VIEW_TYPE_MONTH_TITLE = 2;
     public static final int VIEW_TYPE_EMPTY = 3;
-    public static final int VIEW_TYPE_CHINESEDATE = 4;
+    public static final int VIEW_TYPE_CHINESE_DATE = 4;
 }

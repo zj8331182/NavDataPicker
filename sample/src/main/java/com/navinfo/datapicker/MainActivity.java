@@ -2,14 +2,17 @@ package com.navinfo.datapicker;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
+import com.navinfo.datepicker.data.BaseSelectDate;
 import com.navinfo.datepicker.data.NavDateUtil;
-import com.navinfo.datepicker.data.WeekendNavDate;
 import com.navinfo.datepicker.view.NavDataPicker;
-import com.navinfo.datepicker.view.WeekendDatePickerAdapter;
+import com.navinfo.datepicker.view.OnNavDateSelectListener;
 
 import java.util.Calendar;
 import java.util.List;
+
+import static com.navinfo.datepicker.view.BaseSelectDataPickerAdapter.NAV_DATE_PICKER_SELECT_MODE_TWO;
 
 /**
  * @author Zhang Mingzhe
@@ -25,15 +28,22 @@ public class MainActivity extends AppCompatActivity {
         cs.set(2018, 0, 0);
         Calendar ce = Calendar.getInstance();
         ce.set(2020, 0, 0);
-        NavDateUtil<WeekendNavDate> dataUtil = new NavDateUtil<>();
-        List<WeekendNavDate> date_pickers = null;
+        NavDateUtil<BaseSelectDate> dataUtil = new NavDateUtil<>();
+        List<BaseSelectDate> date_pickers = null;
         try {
-            date_pickers = dataUtil.getNavDateRange(cs, ce, WeekendNavDate.class, false);
+            date_pickers = dataUtil.getNavDateRange(cs, ce, BaseSelectDate.class, false);
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
-        WeekendDatePickerAdapter mPickerAdapter = new WeekendDatePickerAdapter();
+        SampleDatePickerAdapter mPickerAdapter = new SampleDatePickerAdapter();
         mPickerAdapter.setDateList(date_pickers);
+        mPickerAdapter.setSelectMode(NAV_DATE_PICKER_SELECT_MODE_TWO);
+        mPickerAdapter.setOnDateSelectListener(new OnNavDateSelectListener() {
+            @Override
+            public void onDataSelected(List<? extends BaseSelectDate> dates) {
+                Log.i("ZMZ", "onDataSelected: " + dates.size());
+            }
+        });
         dataPicker.setDataPickerAdapter(mPickerAdapter);
     }
 }
