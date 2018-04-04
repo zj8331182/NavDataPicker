@@ -89,10 +89,26 @@ public class NavDateUtil<T extends BaseNavDate> {
      *
      * @param calendar Date
      */
-    public static void clearDate(Calendar calendar) {
+    private static void clearDate(Calendar calendar) {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
+    }
+
+    public static boolean isEqual(@NonNull BaseNavDate first, BaseNavDate second) {
+        return second != null && first.compareTo(second) == 0;
+    }
+
+    public static boolean isEqual(@NonNull Calendar calendar, BaseNavDate date) {
+        if (date == null || date.getDate() == null) {
+            return false;
+        }
+        int year = calendar.get(Calendar.YEAR) - date.getDate().get(Calendar.YEAR);
+        if (year != 0) {
+            return false;
+        }
+        int month = calendar.get(Calendar.MONTH) - date.getDate().get(Calendar.MONTH);
+        return month == 0 && calendar.get(Calendar.DATE) - date.getDate().get(Calendar.DATE) == 0;
     }
 
     /**
@@ -142,19 +158,76 @@ public class NavDateUtil<T extends BaseNavDate> {
         return list;
     }
 
-    public static boolean isEqual(@NonNull BaseNavDate first, BaseNavDate second){
-        return second != null && first.compareTo(second) == 0;
-    }
+    public static class NavDateBuilder<R extends BaseNavDate> {
+        private Calendar mStart;
+        private Calendar mEnd;
+        private Class<R> mClass;
+        private boolean isShowChineseDate;
+        private NavDateUtil<R> util;
 
-    public static boolean isEqual(@NonNull Calendar calendar, BaseNavDate date) {
-        if (date == null || date.getDate() == null) {
-            return false;
+        public NavDateBuilder() {
+            this.util = new NavDateUtil<>();
+            mStart = Calendar.getInstance();
+            mEnd = Calendar.getInstance();
+            isShowChineseDate = false;
         }
-        int year = calendar.get(Calendar.YEAR) - date.getDate().get(Calendar.YEAR);
-        if (year != 0) {
-            return false;
+
+        /**
+         * 设置开始日期
+         *
+         * @param start 开始的日期
+         * @return NavDateBuilder
+         */
+        public NavDateBuilder<R> start(Calendar start) {
+            this.mStart = start;
+            return this;
         }
-        int month = calendar.get(Calendar.MONTH) - date.getDate().get(Calendar.MONTH);
-        return month == 0 && calendar.get(Calendar.DATE) - date.getDate().get(Calendar.DATE) == 0;
+
+        /**
+         * 设置结束日期
+         *
+         * @param end 结束日期
+         * @return NavDateBuilder
+         */
+        public NavDateBuilder<R> end(Calendar end) {
+            this.mEnd = end;
+            return this;
+        }
+
+        /**
+         * 设置数据类型
+         *
+         * @param tClass 数据类型
+         * @return NavDateBuilder
+         */
+        public NavDateBuilder<R> setClass(Class<R> tClass) {
+            this.mClass = tClass;
+            return this;
+        }
+
+        /**
+         * 设置是否显示农历
+         *
+         * @param isShow 是否显示农历
+         * @return NavDateBuilder
+         */
+        public NavDateBuilder<R> showChineseDate(boolean isShow) {
+            this.isShowChineseDate = isShow;
+            return this;
+        }
+
+        /**
+         * Build
+         *
+         * @return 日期的数据列表
+         */
+        public List<R> build() {
+            try {
+                return util.getNavDateRange(mStart, mEnd, mClass, isShowChineseDate);
+            } catch (IllegalAccessException | InstantiationException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 }

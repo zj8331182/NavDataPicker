@@ -6,39 +6,49 @@
 
 使用RecyclerView来实现日历的展示,可扩展性以及复用效果较好
 
-**使用方法**:
-    Step 1:
-        引入库:
-        project的build.gradle文件中
-        
+##**使用方法**:
+###Step 1:
+    引入库:
+    project的build.gradle文件中
+```groovy
     allprojects {
  	    repositories {
- 	        ...
  	        maven { url 'https://jitpack.io' }
         }
  	}
+ ```
         
   module中的build.gradle
-  
+```groovy  
     dependencies {
-  	    compile 'com.github.zj8331182:NavDataPicker:v1.0.1'
+  	    compile 'com.github.zj8331182:NavDataPicker:v1.1.0'
   	}
+```
   这个不多说
   
-  Step 2:<br/>
-     <t/><t/>布局文件中使用NavDataPicker<br/>
-     <t/><t/>自己定义自己的Adapter继承自BaseNavDataPickerAdapter<br/>
-     <t/><t/>Adapter的使用方法和RecyclerView的使用方法是一样<br/>
-  Step 3:<br/>
-     <t/><t/>Adapter的数据使用NavDateUtil中的getNavDateRange方法获取原始的数据<br/>
-     <t/><t/>可以自己对数据进行加工,支持泛型,然后自己在自定义的Adapter中对数据进行展示<br/>
-     <br/>
+###Step 2:<br>
+     <t><t>布局文件中使用NavDataPicker<br>
+####如果不需要日期选择功能,仅用于日历的展<br>
+     <t><t>自定义Adapter继承自BaseNavDataPickerAdapter<br>
+     <t><t>Adapter的使用方法和RecyclerView的使用方法是一样<br>
+     <t><t>onCreateViewHolder()中的viewType中的值参考NavDatePickerConstant.NavDatePickerViewType的数据
+     可以根据不同的View类型使用不同的布局文件,具体使用可以参考DefaultDatePickerAdapter的使用方式<br>
+     <br>
+####如果需要日期选择的功能<br>
+       <t><t>自定义Adapter继承自BaseSelectDataPickerAdapter<br>
+       <t><t>onCreateViewHolderCustomInSelectMode相当于onCreateViewHolder<br>
+       <t><t>onBindViewHolder中可以通过date.getSelectSate来对不同的选择状态进行不同的UI展示,具体的使用方法可以参看Sample Model<br>
+       <t><t>同时支持单点选择和区间选择通过Adapter的setSelectMode进行选择<br>
+###Step 3:<br>
+     <t/><t/>Adapter的数据使用NavDateBuilder来获取,支持泛型,注意一定要将.class对象通过setClass设置进来,不然会导致无法创建对象<br>
+     <t/><t/>可以自己对数据进行加工,然后自己在自定义的Adapter中对数据进行展示<br>
+     <br>
  **效果图**<br/>
-![Image text](https://github.com/zj8331182/NavDataPicker/blob/master/img/img_srceen.jpg)
+![Image text](https://github.com/zj8331182/NavDataPicker/blob/master/img/img_srceen.png)
 
 
-### Lincense
-```lincense
+### License
+```License
 The MIT License (MIT)
 Copyright © 2018 <Zhang, Mingzhe>
 

@@ -51,8 +51,13 @@ public class MainActivity extends AppCompatActivity {
         Observable.just(dataUtil)
                 .map(new Function<NavDateUtil<SampleDate>, List<SampleDate>>() {
                     @Override
-                    public List<SampleDate> apply(NavDateUtil<SampleDate> sampleDateNavDateUtil) throws Exception {
-                        return sampleDateNavDateUtil.getNavDateRange(cs, ce, SampleDate.class, false);
+                    public List<SampleDate> apply(NavDateUtil<SampleDate> sampleDateNavDateUtil) {
+                        return new NavDateUtil.NavDateBuilder<SampleDate>()
+                                .start(cs)
+                                .end(ce)
+                                .setClass(SampleDate.class)
+                                .showChineseDate(false)
+                                .build();
                     }
                 })
                 .map(new Function<List<SampleDate>, List<SampleDate>>() {
