@@ -32,8 +32,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dataPicker = findViewById(R.id.date_picker);
-
+        initTitleAdapter();
         initAdapter();
+    }
+
+    private void initTitleAdapter() {
+        SampleTitleAdapter adapter = new SampleTitleAdapter();
+        dataPicker.setTitleAdapter(adapter);
     }
 
     @SuppressLint("CheckResult")

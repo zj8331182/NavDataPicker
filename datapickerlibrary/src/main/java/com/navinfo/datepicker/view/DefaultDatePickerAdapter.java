@@ -1,6 +1,7 @@
 package com.navinfo.datepicker.view;
 
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +25,9 @@ import static com.navinfo.datepicker.data.NavDatePickerConstant.NavDatePickerVie
  */
 public class DefaultDatePickerAdapter extends BaseNavDataPickerAdapter {
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case VIEW_TYPE_MONTH_TITLE:
                 TextView textView = new TextView(parent.getContext());
@@ -60,7 +62,7 @@ public class DefaultDatePickerAdapter extends BaseNavDataPickerAdapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         BaseNavDate date = (BaseNavDate) mDateList.get(position);
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_CHINESE_DATE:
@@ -85,5 +87,4 @@ public class DefaultDatePickerAdapter extends BaseNavDataPickerAdapter {
             super(itemView);
         }
     }
-
 }

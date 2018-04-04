@@ -1,5 +1,6 @@
 package com.navinfo.datepicker.view;
 
+import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
 import com.navinfo.datepicker.data.BaseSelectDate;
@@ -28,6 +29,7 @@ public abstract class BaseSelectDataPickerAdapter<T extends BaseSelectDatePicker
         mSelectMode = new DatePickerSelectOneMode();
     }
 
+    @NonNull
     @Override
     public final T onCreateViewHolder(ViewGroup parent, int viewType) {
         T t = onCreateViewHolderCustomInSelectMode(parent, viewType);

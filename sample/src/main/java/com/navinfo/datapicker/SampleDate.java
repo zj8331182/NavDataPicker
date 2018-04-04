@@ -3,7 +3,9 @@ package com.navinfo.datapicker;
 import com.navinfo.datepicker.data.BaseSelectDate;
 
 /**
- * Created by Zhang Mingzhe on 2018/4/4.
+ *
+ * @author Zhang Mingzhe
+ * @date 2018/4/4
  * mail:1084904209@qq.com
  * Describe
  */
