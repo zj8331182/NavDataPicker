@@ -3,9 +3,11 @@ package com.navinfo.datepicker.view;
 import android.view.ViewGroup;
 
 import com.navinfo.datepicker.data.BaseSelectDate;
+import com.navinfo.datepicker.data.NavDateUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static com.navinfo.datepicker.data.BaseSelectDate.NAV_DATE_PICKER_SELECT_STATE_NOT_SELECT;
@@ -60,6 +62,18 @@ public abstract class BaseSelectDataPickerAdapter<T extends BaseSelectDatePicker
 
     public void setOnDateSelectListener(OnNavDateSelectListener listener) {
         mSelectMode.setListener(listener);
+    }
+
+    public void setStartDate(Calendar calendar) {
+        if (mSelectMode instanceof DatePickerSelectTwoMode && calendar != null) {
+            int size = mDateList.size();
+            for (int i = 0; i < size; i++) {
+                if (NavDateUtil.isEqual(calendar, mDateList.get(i))) {
+                    ((DatePickerSelectTwoMode) mSelectMode).setStartDate(i);
+                    return;
+                }
+            }
+        }
     }
 
     abstract class BaseDatePickerSelectMode<R extends BaseSelectDate> {
@@ -149,6 +163,10 @@ public abstract class BaseSelectDataPickerAdapter<T extends BaseSelectDatePicker
             for (int i = 1; i < (count - 1); i++) {
                 mSelectItems.get(i).setSelectState(BaseSelectDate.NAV_DATE_PICKER_SELECT_STATE_SELECTED);
             }
+        }
+
+        void setStartDate(int index) {
+            selectStart(index);
         }
     }
 

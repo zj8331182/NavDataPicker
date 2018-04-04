@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("ZMZ", "onDataSelected: " + dates.size());
             }
         });
+        mPickerAdapter.setStartDate(Calendar.getInstance());
         dataPicker.setDataPickerAdapter(mPickerAdapter);
     }
 }

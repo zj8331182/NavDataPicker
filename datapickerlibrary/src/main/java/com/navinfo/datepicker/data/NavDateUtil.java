@@ -1,5 +1,7 @@
 package com.navinfo.datepicker.data;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -83,15 +85,28 @@ public class NavDateUtil<T extends BaseNavDate> {
     }
 
     /**
+     * 清理日期数据,将时分秒置为0,方便比较
+     *
+     * @param calendar Date
+     */
+    public static void clearDate(Calendar calendar) {
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+    }
+
+    /**
      * @param start             开始日期
      * @param end               结束日期
      * @param tClass            返回数据的类型
-     * @param isShowChineseDate 是否显示日历
+     * @param isShowChineseDate 是否显示农历
      * @return 数据列表
      * @throws IllegalAccessException Error
      * @throws InstantiationException Error
      */
     public List<T> getNavDateRange(Calendar start, Calendar end, Class<T> tClass, boolean isShowChineseDate) throws IllegalAccessException, InstantiationException {
+        clearDate(start);
+        clearDate(end);
         Calendar temp = (Calendar) start.clone();
         List<T> list = new ArrayList<>();
         if (end.compareTo(start) > 0) {
@@ -125,5 +140,21 @@ public class NavDateUtil<T extends BaseNavDate> {
             }
         }
         return list;
+    }
+
+    public static boolean isEqual(@NonNull BaseNavDate first, BaseNavDate second){
+        return second != null && first.compareTo(second) == 0;
+    }
+
+    public static boolean isEqual(@NonNull Calendar calendar, BaseNavDate date) {
+        if (date == null || date.getDate() == null) {
+            return false;
+        }
+        int year = calendar.get(Calendar.YEAR) - date.getDate().get(Calendar.YEAR);
+        if (year != 0) {
+            return false;
+        }
+        int month = calendar.get(Calendar.MONTH) - date.getDate().get(Calendar.MONTH);
+        return month == 0 && calendar.get(Calendar.DATE) - date.getDate().get(Calendar.DATE) == 0;
     }
 }

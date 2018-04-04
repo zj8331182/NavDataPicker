@@ -1,5 +1,7 @@
 package com.navinfo.datepicker.data;
 
+import android.support.annotation.NonNull;
+
 import java.util.Calendar;
 
 /**
@@ -8,7 +10,7 @@ import java.util.Calendar;
  * mail:1084904209@qq.com
  * Describe
  */
-public class BaseNavDate {
+public class BaseNavDate implements Comparable<BaseNavDate> {
 
     private Calendar mDate;
     private int mType;
@@ -39,5 +41,21 @@ public class BaseNavDate {
 
     public void setChineseDate(ChineseDate chineseDate) {
         mChineseDate = chineseDate;
+    }
+
+    @Override
+    public int compareTo(@NonNull BaseNavDate that) {
+        if (that.getDate() == null){
+            return 1;
+        }
+        int year = mDate.get(Calendar.YEAR) - that.getDate().get(Calendar.YEAR);
+        if (year != 0) {
+            return year;
+        }
+        int month = mDate.get(Calendar.MONTH) - that.getDate().get(Calendar.MONTH);
+        if (month != 0) {
+            return month;
+        }
+        return mDate.get(Calendar.DATE) - that.getDate().get(Calendar.DATE);
     }
 }
