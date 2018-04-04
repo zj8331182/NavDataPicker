@@ -1,13 +1,13 @@
 package com.navinfo.datapicker;
 
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.navinfo.datepicker.data.BaseSelectDate;
 import com.navinfo.datepicker.view.BaseSelectDataPickerAdapter;
 import com.navinfo.datepicker.view.BaseSelectDatePickerViewHolder;
 
@@ -29,8 +29,8 @@ import static com.navinfo.datepicker.data.NavDatePickerConstant.NavDatePickerVie
 public class SampleDatePickerAdapter extends BaseSelectDataPickerAdapter<SampleDatePickerAdapter.BaseSampleViewHolder> {
 
     @Override
-    public void onBindViewHolder(BaseSampleViewHolder holder, int position) {
-        BaseSelectDate date = (BaseSelectDate) mDateList.get(position);
+    public void onBindViewHolder(@NonNull BaseSampleViewHolder holder, int position) {
+        SampleDate date = (SampleDate) mDateList.get(position);
         switch (date.getType()) {
             case VIEW_TYPE_DATE:
                 SampleViewHolder viewHolder = (SampleViewHolder) holder;
@@ -49,6 +49,8 @@ public class SampleDatePickerAdapter extends BaseSelectDataPickerAdapter<SampleD
                         viewHolder.imageView.setBackgroundColor(Color.WHITE);
                         break;
                 }
+                viewHolder.itemView.setEnabled(date.isEnable());
+                viewHolder.textView.setTextColor(date.isEnable() ? Color.BLACK : Color.GRAY);
                 viewHolder.textView.setText(String.valueOf(date.getDate().get(Calendar.DATE)));
                 break;
             case VIEW_TYPE_MONTH_TITLE:
